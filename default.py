@@ -70,11 +70,15 @@ def index():
 def listChannel(urlMain, thumb):
     if urlMain == urlMainRTL:
         addDir(translation(30016), urlMain+"/newsuebersicht.php", "listShowsThumb", thumb)
-        addDir(translation(30015), urlMain+"/sendung_a_z.php", "listShowsThumb", thumb)
+        #addDir(translation(30015), urlMain+"/sendung_a_z.php", "listShowsThumb", thumb)
+        addDir(translation(30203), urlMain+"/sendung_a_z.php", "listShowsThumb", thumb)
     elif urlMain in [urlMainVOX, urlMainNTV, urlMainRTLNitro]:
-        addDir(translation(30014), urlMain+"/sendung_a_z.php", "listShowsThumb", thumb)
-    else:
-        addDir(translation(30014), urlMain, "listShowsNoThumb", thumb)
+        #addDir(translation(30014), urlMain+"/sendung_a_z.php", "listShowsThumb", thumb)
+        addDir(translation(30203), urlMain+"/sendung_a_z.php", "listShowsThumb", thumb)
+    #else:
+    #    addDir(translation(30014), urlMain, "listShowsNoThumb", thumb)
+    #
+    addDir(translation(30014), urlMain, "listShowsNoThumb", thumb)
     addDir(translation(30018), urlMain, "listVideosNew", thumb, "", "newlist")
     addDir(translation(30017), urlMain, "listVideosNew", thumb, "", "tipplist")
     addDir(translation(30019), urlMain, "listVideosNew", thumb, "", "top10list")
@@ -127,7 +131,7 @@ def listShowsNoThumb(urlMain, thumb):
             title = cleanTitle(match[0]).replace(" online ansehen", "")
             match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
             url = urlMain+match[0]
-            if '>FREE<' in entry or '>NEW<' in entry:
+            if '>FREE<' in entry or '>NEW<' in entry or '>NEU!<' in entry:
                 if url not in entries:
                     addShowDir(title, url, 'listVideos', thumb)
                     entries.append(url)

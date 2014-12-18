@@ -284,8 +284,21 @@ def playVideo(urlMain):
                 playpath = "mp4:"+playpath
             finalUrl = "rtmpe://"+matchRTMPE[0][0]+"/"+matchRTMPE[0][1]+"/ playpath="+playpath+" swfVfy=1 swfUrl=http://"+hosterURL+"/includes/vodplayer.swf app="+matchRTMPE[0][1]+"/_definst_ tcUrl=rtmpe://"+matchRTMPE[0][0]+"/"+matchRTMPE[0][1]+"/ pageUrl="+urlMain
         elif matchHDS:
-            randomnumber = random.randint(27, 33)        
-            finalUrl = "rtmpe://fms-fra"+str(randomnumber)+".rtl.de/"+matchHDS[0][2]+"/ playpath=mp4:"+matchHDS[0][4].replace(".f4m", "")+" swfVfy=1 swfUrl=http://"+hosterURL+"/includes/vodplayer.swf app="+matchHDS[0][2]+"/_definst_ tcUrl=rtmpe://fms-fra"+str(randomnumber)+".rtl.de/"+matchHDS[0][2]+"/ pageUrl="+urlMain
+            availableServers = (
+                "fms-fra21.rtl.de",
+                "fms-fra22.rtl.de",
+                "fms-fra23.rtl.de",
+                "fms-fra26.rtl.de",
+                "fms-fra27.rtl.de",
+                "fms-fra28.rtl.de",
+                "fms-fra32.rtl.de",
+                "fms-fra33.rtl.de",
+                )
+            selectedServer = random.choice(availableServers)
+            #comment this line if you DO NOT want to see the selected server!
+            xbmc.executebuiltin("XBMC.Notification(%s, %s, 3500, %s)" % ("Stream-Url", selectedServer, addon.getAddonInfo('icon')))
+
+            finalUrl = "rtmpe://"+selectedServer+"/"+matchHDS[0][2]+"/ playpath=mp4:"+matchHDS[0][4].replace(".f4m", "")+" swfVfy=1 swfUrl=http://"+hosterURL+"/includes/vodplayer.swf app="+matchHDS[0][2]+"/_definst_ tcUrl=rtmpe://"+selectedServer+"/"+matchHDS[0][2]+"/ pageUrl="+urlMain
         if finalUrl:
             listitem = xbmcgui.ListItem(path=finalUrl)
             xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
